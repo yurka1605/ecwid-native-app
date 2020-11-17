@@ -1,6 +1,6 @@
 // Initialize the application
 EcwidApp.init({
-  app_id: "headline-ecwid-native-app",
+  app_id: "headline-api-dev",
   autoloadedflag: true,
   autoheight: true
 });
