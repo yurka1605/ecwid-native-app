@@ -1,9 +1,4 @@
 // Initialize the application
-EcwidApp.init({
-  app_id: "headline-api-dev",
-  autoloadedflag: true,
-  autoheight: true
-});
 var storeData = EcwidApp.getPayload();
 var storeId = storeData.store_id;
 var accessToken = storeData.access_token;
