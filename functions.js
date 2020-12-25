@@ -170,6 +170,6 @@ async function request() {
 			},
 		})
 	});
-	const res = await res.json();
+	const res = await response.json();
 	console.log(res);
 }
