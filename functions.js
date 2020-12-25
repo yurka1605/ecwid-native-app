@@ -4,14 +4,19 @@ EcwidApp.init({
   autoloadedflag: true,
   autoheight: true
 });
+
 var storeData = EcwidApp.getPayload();
 var storeId = storeData.store_id;
 var accessToken = storeData.access_token;
 var language = storeData.lang;
 var viewMode = storeData.view_mode;
+
+console.log(storeData);
+
 if (storeData.public_token !== undefined){
   var publicToken = storeData.public_token;
 }
+
 if (storeData.app_state !== undefined){
   var appState = storeData.app_state;
 }
@@ -49,6 +54,7 @@ function setValuesForPage(applicationConfig){
 		public: {},
 		private: {}
 	};
+	console.log(applicationConfig);
 
 	// for cases when we get existing users' data
 	if (applicationConfig.constructor === Array){
@@ -97,17 +103,16 @@ var initialConfig = {
 
 initialConfig.public = JSON.stringify(initialConfig.public);
 
-// Executes when we have a new user install the app. It creates and sets the default data using Ecwid JS SDK and Application storage
 function createUserData() {
-	// Saves data for application storage 
+
 	EcwidApp.setAppStorage(initialConfig.private, function(value){
 		console.log('Initial private user preferences saved!');
 	});
-	// Saves data for public app config
+
 	EcwidApp.setAppPublicConfig(initialConfig.public, function(value){
 		console.log('Initial public user preferences saved!');
 	});
-	// Function to prepopulate values of select, input and textarea elements based on default settings for new accounts
+	
 	setValuesForPage(initialConfig);
 }
 
