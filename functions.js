@@ -1,3 +1,4 @@
+const apiUrl = "http://127.0.0.1:5000/api";
 // Initialize the application
 EcwidApp.init({
   app_id: "headline-api-dev",
@@ -145,3 +146,30 @@ EcwidApp.getAppStorage('installed', function(value){
 		createUserData();
 	}
 })
+
+request();
+
+async function request() {
+	const response = await fetch(apiUrl, {
+		method: 'POST',
+		mode: 'cors',
+		credentials: 'same-origin',
+		headers: {'Content-Type': 'application/json'},
+		referrerPolicy: 'no-referrer',
+		body: JSON.stringify({
+			id: '22a6cb1-718b-86b3-4fad-c38d636efb',
+			jsonrpc: '2.0',
+			method: 'CreateClient',
+			params: {
+				name: 'новый клиент',
+				organization_id: '212',
+				store_id: '190234',
+				token_app: 'secret_Ws9kyiXM4EBWNKCsVr5rvqU4SnDZB5BV',
+				login_iiko: 'login',
+				password_iiko: 'password',
+			},
+		})
+	});
+
+	console.log(response);
+}
