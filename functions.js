@@ -170,7 +170,7 @@ saveBtn.addEventListener('click', function () {
 	console.log(saveData);
 	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
 	.map(el => new Promise((resolve, reject) => {
-			resolve(fetch(`https://app.ecwid.com/api/v3/${storeId}/storage/${el}`, {method: 'DELETE', headers: {}}));
+			resolve(fetch(`https://app.ecwid.com/api/v3/${storeId}/storage/accessToken`, {method: 'DELETE', headers: {}}));
 		})
 	);
 
