@@ -166,10 +166,13 @@ EcwidApp.getAppStorage('installed', function(value){
 const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
-	EcwidApp.getAppStorage(function(allValues){
-		const data = {};
+	EcwidApp.getAppStorage(function(allValues) {
+		const public = JSON.parse(allValues.find(el => el.key === 'public'));
+		const data = {...public};
 		allValues.forEach(el => {
-			data[el.key] = el.value;
+			if (el.key !== 'installed' && el.key !== 'public') {
+				data[el.key] = el.value;
+			}
 		});
 		console.log(data);
 
