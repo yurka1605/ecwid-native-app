@@ -44,7 +44,7 @@ function readValuesFromPage(){
 				if(allInputs[i].type == 'checkbox' || allInputs[i].type == 'radio'){
 					applicationConfig[fieldVisibility][allInputs[i].dataset.name] = String(allInputs[i].checked) ;
 				}
-				if(allInputs[i].type == 'text' || allInputs[i].type == 'number' || allInputs[i].type == 'date') {
+				if(allInputs[i].type == 'text' || allInputs[i].type == 'number' || allInputs[i].type == 'date' || allInputs[i].type == 'password') {
 					applicationConfig[fieldVisibility][allInputs[i].dataset.name] = allInputs[i].value;	
 				}
 			}
@@ -94,7 +94,7 @@ function setValuesForPage(applicationConfig){
 					allInputs[i].checked = (applicationConfig[fieldVisibility][allInputs[i].dataset.name] == "true");
 					checkFieldChange(allInputs[i]);
 				}
-				if(allInputs[i].type == 'text' || allInputs[i].type == 'number' || allInputs[i].type == 'date') {
+				if(allInputs[i].type == 'text' || allInputs[i].type == 'number' || allInputs[i].type == 'date' || allInputs[i].type == 'password') {
 					allInputs[i].value = applicationConfig[fieldVisibility][allInputs[i].dataset.name];
 					checkFieldChange(allInputs[i]);
 				}
