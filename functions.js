@@ -173,7 +173,7 @@ saveBtn.addEventListener('click', function () {
 			}
 		});
 
-		data.id ? createNewClient(data) : updateClient(data);
+		data.id ? updateClient(data) : createNewClient(data);
 	});
 });
 
