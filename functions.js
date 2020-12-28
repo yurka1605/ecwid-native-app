@@ -235,6 +235,7 @@ async function createNewClient(data) {
 
 async function updateClient(data) {
 	try {
+		delete data.id;
 		const response = await fetch(apiUrl, {
 			...fetchData,
 			body: JSON.stringify({
