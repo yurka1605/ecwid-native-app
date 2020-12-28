@@ -163,7 +163,7 @@ EcwidApp.getAppStorage('installed', function(value){
 	}
 })
 
-const saveBtn = document.querySelector('save-btn');
+const saveBtn = document.querySelector('btn-save');
 
 saveBtn.addEventListener('click', function () {
 	var saveData = readValuesFromPage();
