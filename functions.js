@@ -169,7 +169,7 @@ saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(function(allValues){
 		const data = {};
 		allValues.forEach(el => {
-			data[el.key] = value;
+			data[el.key] = el.value;
 		});
 		console.log(data);
 
