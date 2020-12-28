@@ -167,7 +167,7 @@ const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(async function(allValues) {
-		const public = await fetch(`https://app.ecwid.com/api/v3/${storeId}/storage`, {
+		const public = await fetch(`https://app.ecwid.com/api/v3/${storeId}/storage?token=${accessToken}`, {
 			"method": "GET",
 			"headers": {}
 		});
