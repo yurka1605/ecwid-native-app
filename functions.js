@@ -163,6 +163,13 @@ EcwidApp.getAppStorage('installed', function(value){
 	}
 })
 
+const saveBtn = document.querySelector('save-btn');
+
+saveBtn.addEventListener('click', function () {
+	var saveData = readValuesFromPage();
+	console.log(saveData);
+});
+
 async function saveClientData() {
 	const response = await fetch(apiUrl, {
 		method: 'POST',
