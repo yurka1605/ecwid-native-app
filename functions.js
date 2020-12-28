@@ -248,11 +248,7 @@ async function updateClient(data) {
 			})
 		});
 		const res = await response.json();
-		if (res.errorCode === 0) {
-			console.log(`${res.errorDescription}`);
-		} else {
-			console.log(`${error.errorCode}: ${error.errorDescription}`);	
-		}
+		console.log(`${res.result.errorCode}: ${res.result.errorDescription}`);	
 	} catch (error) {
 		console.log(`${error.errorCode}: ${error.errorDescription}`);	
 	}
