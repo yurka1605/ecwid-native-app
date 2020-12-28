@@ -166,16 +166,34 @@ EcwidApp.getAppStorage('installed', function(value){
 const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
-	var saveData = readValuesFromPage();
-	console.log(saveData);
-	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
-	.map(el => new Promise((resolve, reject) => {
-			resolve(fetch(`https://app.ecwid.com/api/v3/${storeId}/storage/${el}?token=${accessToken}`, {method: 'DELETE', headers: {}}));
-		})
-	);
-
-	Promise.all(urls);
+	EcwidApp.getAppStorage(function(allValues){
+		console.log(allValues);
+	});
 });
+
+async function deleteClientData() {
+	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
+		.map(el => new Promise((resolve, reject) => {
+				resolve(
+					fetch(
+						`https://app.ecwid.com/api/v3/${storeId}/storage/${el}?token=${accessToken}`, 
+						{
+							method: 'DELETE', 
+							headers: {}
+						}
+					)
+				);
+			})
+		);
+	const responce = {status: 0, text: 'Success'};
+	try {
+		await Promise.all(urls);
+	} catch (error) {
+		responce.status = 1;
+		responce.text = error;
+	}
+	return responce;	
+}
 
 async function saveClientData() {
 	const response = await fetch(apiUrl, {
