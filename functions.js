@@ -113,12 +113,12 @@ var initialConfig = {
 		name: '',
 		organization_id: '',
 		login_iiko: '',
-		password_iiko: '',
 	},
 	private: {
 		id: '',
 		store_id: storeId,
 		token_app: accessToken,
+		password_iiko: '',
 		installed: "true",
 	}
 };
