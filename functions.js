@@ -167,10 +167,12 @@ const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(async function(allValues) {
-		const public = await fetch(`https://app.ecwid.com/api/v3/${storeId}/storage?token=${accessToken}`, {
+		const res = await fetch(`https://app.ecwid.com/api/v3/${storeId}/storage?token=${accessToken}`, {
 			"method": "GET",
 			"headers": {}
 		});
+
+		const public = await res.json();
 
 		// const data = {...saveData.public};
 		// allValues.forEach(el => {
