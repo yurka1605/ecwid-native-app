@@ -168,16 +168,14 @@ const saveBtn = document.querySelector('.btn-save');
 saveBtn.addEventListener('click', function () {
 	var saveData = readValuesFromPage();
 	console.log(saveData);
-});
-
-
-const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
+	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
 	.map(el => new Promise((resolve, reject) => {
-			resolve(fetch(`https://app.ecwid.com/api/v3/${storeId}/storage/${el}`, {method: 'DELETE'}));
+			resolve(fetch(`https://app.ecwid.com/api/v3/${storeId}/storage/${el}`, {method: 'DELETE', headers: {}}));
 		})
 	);
 
-Promise.all(urls);
+	Promise.all(urls);
+});
 
 async function saveClientData() {
 	const response = await fetch(apiUrl, {
