@@ -116,7 +116,6 @@ var initialConfig = {
 	},
 	private: {
 		id: '',
-		store_id: storeId,
 		token_app: accessToken,
 		password_iiko: '',
 		installed: "true",
@@ -167,16 +166,14 @@ const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(async function(allValues) {
-		const publicVal = JSON.parse(allValues.find(el => el.key === 'public').value);
-		const data = {...publicVal};
+		const data = {...JSON.parse(allValues.find(el => el.key === 'public').value)};
 		allValues.forEach(el => {
 			if (el.key !== 'installed' && el.key !== 'public') {
 				data[el.key] = el.value;
 			}
 		});
-		console.log(data);
 
-		// data.id ? createNewClient(data) : updateClient(data);
+		data.id ? createNewClient(data) : updateClient(data);
 	});
 });
 
@@ -215,43 +212,44 @@ const fetchData = {
 
 const jsonrpc = '2.0';
 
-async function createNewClient() {
-	const response = await fetch(apiUrl, {
-		...fetchData,
-		body: JSON.stringify({
-			id: '22a6cb1-718b-86b3-4fad-c38d636efb',
-			jsonrpc,
-			method: 'CreateClient',
-			params: {
-				name: 'новый клиент',
-				organization_id: '212',
-				store_id: '190234',
-				token_app: 'secret_Ws9kyiXM4EBWNKCsVr5rvqU4SnDZB5BV',
-				login_iiko: 'login',
-				password_iiko: 'password',
-			},
-		})
-	});
-	const res = await response.json();
-	console.log(res);
+async function createNewClient(data) {
+	try {
+		const response = await fetch(apiUrl, {
+			...fetchData,
+			body: JSON.stringify({
+				id: '22a6cb1-718b-86b3-4fad-c38d636efb',
+				jsonrpc,
+				method: 'CreateClient',
+				params: {
+					store_id: storeId,
+					...data,
+				},
+			})
+		});
+		await response.json();
+		console.log(`${error.errorDescription}`);
+	} catch (error) {
+		console.log(`${error.errorCode}: ${error.errorDescription}`);	
+	}
 }
 
-async function updateClient() {
-	const response = await fetch(apiUrl, {
-		...fetchData,
-		body: JSON.stringify({
-			id: '22a6cb1-718b-86b3-4fad-c38d636efb',
-			jsonrpc,
-			method: 'CreateClient',
-			params: {
-				name: 'новый клиент',
-				organization_id: '212',
-				store_id: '190234',
-				token_app: 'secret_Ws9kyiXM4EBWNKCsVr5rvqU4SnDZB5BV',
-				login_iiko: 'login',
-				password_iiko: 'password',
-			},
-		})
-	});
-	const res = await response.json();
+async function updateClient(data) {
+	try {
+		const response = await fetch(apiUrl, {
+			...fetchData,
+			body: JSON.stringify({
+				id: '22a6cb1-718b-86b3-4fad-c38d636efb',
+				jsonrpc,
+				method: 'UpdateClient',
+				params: {
+					store_id: storeId,
+					...data,
+				},
+			})
+		});
+		await response.json();
+		console.log(`${error.errorDescription}`);
+	} catch (error) {
+		console.log(`${error.errorCode}: ${error.errorDescription}`);	
+	}
 }
