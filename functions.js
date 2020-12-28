@@ -165,6 +165,8 @@ EcwidApp.getAppStorage('installed', function(value){
 const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
+	const app = Ecwid.getAppPublicConfig();
+	console.log(app);
 	EcwidApp.getAppStorage(async function(allValues) {
 		const data = {...JSON.parse(allValues.find(el => el.key === 'public').value)};
 		allValues.forEach(el => {
@@ -226,7 +228,8 @@ async function createNewClient(data) {
 				},
 			})
 		});
-		await response.json();
+		const res = await response.json();
+		res.id;
 		console.log(`${error.errorDescription}`);
 	} catch (error) {
 		console.log(`${error.errorCode}: ${error.errorDescription}`);	
