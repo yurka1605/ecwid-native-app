@@ -175,6 +175,7 @@ saveBtn.addEventListener('click', function () {
 		// 	}
 		// });
 		console.log(typeof publicStr);
+		console.log(JSON.parse(publicStr));
 
 		// data.id ? createNewClient(data) : updateClient(data);
 	});
