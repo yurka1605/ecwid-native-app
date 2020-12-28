@@ -167,20 +167,14 @@ const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(async function(allValues) {
-		const res = await fetch(`https://app.ecwid.com/api/v3/${storeId}/storage?token=${accessToken}`, {
-			"method": "GET",
-			"headers": {}
-		});
-
-		const public = await res.json();
-
+		const publicStr = allValues.find(el => el.key === 'public').value;
 		// const data = {...saveData.public};
 		// allValues.forEach(el => {
 		// 	if (el.key !== 'installed' && el.key !== 'public') {
 		// 		data[el.key] = el.value;
 		// 	}
 		// });
-		console.log(public);
+		console.log(publicStr);
 
 		// data.id ? createNewClient(data) : updateClient(data);
 	});
