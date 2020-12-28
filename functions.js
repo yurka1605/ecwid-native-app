@@ -168,6 +168,7 @@ const saveBtn = document.querySelector('.btn-save');
 saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(function(allValues) {
 		const saveData = readValuesFromPage();
+		console.log(...JSON.parse(saveData.public));
 		const data = {...saveData.public};
 		allValues.forEach(el => {
 			if (el.key !== 'installed' && el.key !== 'public') {
