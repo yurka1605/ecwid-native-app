@@ -167,11 +167,17 @@ const saveBtn = document.querySelector('.btn-save');
 
 saveBtn.addEventListener('click', function () {
 	EcwidApp.getAppStorage(function(allValues){
-		console.log(allValues);
+		const data = {};
+		allValues.forEach(el => {
+			data[el.key] = value;
+		});
+		console.log(data);
+
+		// data.id ? createNewClient(data) : updateClient(data);
 	});
 });
 
-async function deleteClientData() {
+async function deleteClientStorageData() {
 	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
 		.map(el => new Promise((resolve, reject) => {
 				resolve(
@@ -195,16 +201,23 @@ async function deleteClientData() {
 	return responce;	
 }
 
-async function saveClientData() {
+// Client save db
+const fetchData = {
+	method: 'POST',
+	mode: 'cors',
+	credentials: 'same-origin',
+	headers: {'Content-Type': 'application/json'},
+	referrerPolicy: 'no-referrer',
+};
+
+const jsonrpc = '2.0';
+
+async function createNewClient() {
 	const response = await fetch(apiUrl, {
-		method: 'POST',
-		mode: 'cors',
-		credentials: 'same-origin',
-		headers: {'Content-Type': 'application/json'},
-		referrerPolicy: 'no-referrer',
+		...fetchData,
 		body: JSON.stringify({
 			id: '22a6cb1-718b-86b3-4fad-c38d636efb',
-			jsonrpc: '2.0',
+			jsonrpc,
 			method: 'CreateClient',
 			params: {
 				name: 'новый клиент',
@@ -218,4 +231,24 @@ async function saveClientData() {
 	});
 	const res = await response.json();
 	console.log(res);
+}
+
+async function updateClient() {
+	const response = await fetch(apiUrl, {
+		...fetchData,
+		body: JSON.stringify({
+			id: '22a6cb1-718b-86b3-4fad-c38d636efb',
+			jsonrpc,
+			method: 'CreateClient',
+			params: {
+				name: 'новый клиент',
+				organization_id: '212',
+				store_id: '190234',
+				token_app: 'secret_Ws9kyiXM4EBWNKCsVr5rvqU4SnDZB5BV',
+				login_iiko: 'login',
+				password_iiko: 'password',
+			},
+		})
+	});
+	const res = await response.json();
 }
