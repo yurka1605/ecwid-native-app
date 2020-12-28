@@ -227,8 +227,7 @@ async function createNewClient(data) {
 			})
 		});
 		const res = await response.json();
-		res.id;
-		console.log(`${error.errorDescription}`);
+		EcwidApp.setAppStorage({id: res.result.id}, () => console.log(`Клиент добавлен`));
 	} catch (error) {
 		console.log(`${error.errorCode}: ${error.errorDescription}`);	
 	}
