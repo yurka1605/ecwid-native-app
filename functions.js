@@ -155,8 +155,10 @@ const fetchData = {
 const jsonrpc = '2.0';
 
 const saveBtn = document.querySelector('.btn-save');
+const loader = document.querySelector('.loader');
 
-saveBtn.addEventListener('click', function () {
+saveBtn.addEventListener('click', async function () {
+	loader.classList.remove('hidden');
 	EcwidApp.getAppStorage(async function(allValues) {
 		const data = {...JSON.parse(allValues.find(el => el.key === 'public').value)};
 		allValues.forEach(el => {
@@ -165,7 +167,12 @@ saveBtn.addEventListener('click', function () {
 			}
 		});
 
-		data.id ? updateClient(data) : createNewClient(data);
+		if (data.id) {
+			await updateClient(data)
+		} else {
+			await createNewClient(data);
+		}
+		loader.classList.remove('hidden');
 	});
 });
 
@@ -190,8 +197,10 @@ async function createNewClient(data) {
 		} else {
 			showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
 		}
+		return;
 	} catch (error) {
 		showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${error.status}, Описание: ${error.message}`);
+		return;
 	}
 }
 
@@ -215,8 +224,10 @@ async function updateClient(data) {
 		} else {
 			showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
 		}
+		return;
 	} catch (error) {
 		showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${error.status}, Описание: ${error.message}`);
+		return;
 	}
 }
 

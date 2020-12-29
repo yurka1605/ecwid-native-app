@@ -24,8 +24,16 @@
     box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 1px #fd3826 inset;
 }
 
+.submit-pannel {
+    display: flex;
+    align-items: center;
+}
+
 .loader {
     animation: 0.3s infinite alternate rotate;
+}
+.loader.hidden {
+    display: none;
 }
 
 @keyframes rotate {
