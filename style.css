@@ -20,3 +20,6 @@
     background-color: #ffebe9;
     box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 1px #fd3826 inset;
 }
+.a-card__paddings {
+    padding: 0;
+}
