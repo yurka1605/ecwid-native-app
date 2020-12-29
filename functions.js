@@ -234,10 +234,10 @@ const alertText = document.querySelector('.cta-block__content');
 
 showAlert('info', 'Для сохранения/изменения данных нажмите кнопку сохранить');
 
-alertClose.addEventListener('click', () => {
+alertClose.addEventListener('click', function () {
 	alertBlock.classList.add('hidden');
-	alertTitle.innerHTML('');
-	alertText.innerHTML('');
+	alertTitle.innerHTML = '';
+	alertText.innerHTML = '';
 });
 
 function showAlert(type, title, text = '') {
@@ -248,8 +248,8 @@ function showAlert(type, title, text = '') {
 		}
 	}
 	alertBlock.classList.remove('hidden');
-	alertTitle.innerHTML(title);
-	alertText.innerHTML(text);
+	alertTitle.innerHTML = title;
+	alertText.innerHTML = text;
 }
 
 /***
