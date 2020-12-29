@@ -184,7 +184,7 @@ async function createNewClient(data) {
 			})
 		});
 		const res = await response.json();
-		if (res.errorCode === 0) {
+		if (res.result.errorCode === 0) {
 			showAlert('success', 'Данные успешно сохранены');
 			EcwidApp.setAppStorage({id: res.result.id}, () => console.log(`Клиент добавлен`));
 		} else {
@@ -210,7 +210,7 @@ async function updateClient(data) {
 			})
 		});
 		const res = await response.json();
-		if (res.errorCode === 0) {
+		if (res.result.errorCode === 0) {
 			showAlert('success', 'Данные успешно изменены');
 		} else {
 			showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
