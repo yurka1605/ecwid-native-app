@@ -9,8 +9,6 @@ EcwidApp.init({
 var storeData = EcwidApp.getPayload();
 var storeId = storeData.store_id;
 var accessToken = storeData.access_token;
-var language = storeData.lang;
-var viewMode = storeData.view_mode;
 
 if (storeData.public_token !== undefined){
   var publicToken = storeData.public_token;
@@ -125,42 +123,35 @@ var initialConfig = {
 initialConfig.public = JSON.stringify(initialConfig.public);
 
 function createUserData() {
-
-	EcwidApp.setAppStorage(initialConfig.private, function(value){
-		console.log('Initial private user preferences saved!');
-	});
-
-	EcwidApp.setAppPublicConfig(initialConfig.public, function(value){
-		console.log('Initial public user preferences saved!');
-	});
-	
+	EcwidApp.setAppStorage(initialConfig.private);
+	EcwidApp.setAppPublicConfig(initialConfig.public);
 	setValuesForPage(initialConfig);
 }
 
 
 function getUserData() {
-	EcwidApp.getAppStorage(function(allValues){
-		setValuesForPage(allValues);
-	});
+	EcwidApp.getAppStorage(allValues => setValuesForPage(allValues));
 }
 
 function saveUserData() {
 	var saveData = readValuesFromPage();
-	EcwidApp.setAppStorage(saveData.private, function(savedData){
-		console.log('Private preferences saved!');
-	});
-	EcwidApp.setAppPublicConfig(saveData.public, function(savedData){
-		console.log('Public preferences saved!');
-	})
+	EcwidApp.setAppStorage(saveData.private);
+	EcwidApp.setAppPublicConfig(saveData.public);
 }
 
-EcwidApp.getAppStorage('installed', function(value){
-	if (value != null) {
-		getUserData();
-	} else {
-		createUserData();
-	}
-})
+EcwidApp.getAppStorage('installed', value => value != null ? getUserData() : createUserData());
+
+/***
+ * Client save db
+ */ 
+const fetchData = {
+	method: 'POST',
+	mode: 'cors',
+	credentials: 'same-origin',
+	headers: {'Content-Type': 'application/json'},
+	referrerPolicy: 'no-referrer',
+};
+const jsonrpc = '2.0';
 
 const saveBtn = document.querySelector('.btn-save');
 
@@ -177,41 +168,6 @@ saveBtn.addEventListener('click', function () {
 	});
 });
 
-async function deleteClientStorageData() {
-	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
-		.map(el => new Promise((resolve, reject) => {
-				resolve(
-					fetch(
-						`https://app.ecwid.com/api/v3/${storeId}/storage/${el}?token=${accessToken}`, 
-						{
-							method: 'DELETE', 
-							headers: {}
-						}
-					)
-				);
-			})
-		);
-	const responce = {status: 0, text: 'Success'};
-	try {
-		await Promise.all(urls);
-	} catch (error) {
-		responce.status = 1;
-		responce.text = error;
-	}
-	return responce;	
-}
-
-// Client save db
-const fetchData = {
-	method: 'POST',
-	mode: 'cors',
-	credentials: 'same-origin',
-	headers: {'Content-Type': 'application/json'},
-	referrerPolicy: 'no-referrer',
-};
-
-const jsonrpc = '2.0';
-
 async function createNewClient(data) {
 	try {
 		const response = await fetch(apiUrl, {
@@ -227,9 +183,14 @@ async function createNewClient(data) {
 			})
 		});
 		const res = await response.json();
-		EcwidApp.setAppStorage({id: res.result.id}, () => console.log(`Клиент добавлен`));
+		if (res.errorCode === 0) {
+			showAlert('success', 'Данные успешно сохранены');
+			EcwidApp.setAppStorage({id: res.result.id}, () => console.log(`Клиент добавлен`));
+		} else {
+			showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
+		}
 	} catch (error) {
-		console.log(`${error.errorCode}: ${error.errorDescription}`);	
+		showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${error.status}, Описание: ${error.text}`);
 	}
 }
 
@@ -248,8 +209,70 @@ async function updateClient(data) {
 			})
 		});
 		const res = await response.json();
-		console.log(`${res.result.errorCode}: ${res.result.errorDescription}`);	
+		if (res.errorCode === 0) {
+			showAlert('success', 'Данные успешно изменены');
+		} else {
+			showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
+		}
 	} catch (error) {
-		console.log(`${error.errorCode}: ${error.errorDescription}`);	
+		showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${error.status}, Описание: ${error.text}`);
 	}
 }
+
+/***
+ * Alert message
+ */ 
+const statuses = {
+	info: 'a-card--info',
+	success: 'a-card--success',
+	error: 'a-card--error',
+};
+const alertBlock = document.querySelector('.alert');
+const alertClose = document.querySelector('.alert-close-mark');
+const alertTitle = document.querySelector('.cta-block__title');
+const alertText = document.querySelector('.cta-block__content');
+
+alertClose.addEventListener('click', () => {
+	alertBlock.classList.add('hidden');
+	alertTitle.text('');
+	alertText.text('');
+});
+
+function showAlert(type, title, text = '') {
+	for (const key in statuses) {
+		if (Object.hasOwnProperty.call(statuses, key)) {
+			const status = statuses[key];
+			key === type ? alertBlock.classList.add(status) : alertBlock.classList.remove(status);
+		}
+	}
+	alertBlock.classList.remove('hidden');
+	alertTitle.text(title);
+	alertText.text(text);
+}
+
+/***
+ * Удаление данных из ecwid storage - использовать только во время разработки
+ */
+// async function deleteClientStorageData() {
+// 	const urls = ['companyName', 'loginIikoApi', 'organizationID', 'passwordIikoApi']
+// 		.map(el => new Promise((resolve, reject) => {
+// 				resolve(
+// 					fetch(
+// 						`https://app.ecwid.com/api/v3/${storeId}/storage/${el}?token=${accessToken}`, 
+// 						{
+// 							method: 'DELETE', 
+// 							headers: {}
+// 						}
+// 					)
+// 				);
+// 			})
+// 		);
+// 	const responce = {status: 0, text: 'Success'};
+// 	try {
+// 		await Promise.all(urls);
+// 	} catch (error) {
+// 		responce.status = 1;
+// 		responce.text = error;
+// 	}
+// 	return responce;	
+// }
