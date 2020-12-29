@@ -28,7 +28,7 @@
     animation: 0.3s infinite alternate rotate;
 }
 
-@keyframes slidein {
+@keyframes rotate {
     0% {
         transform: rotate(0deg);
     }
