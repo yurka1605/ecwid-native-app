@@ -232,6 +232,8 @@ const alertClose = document.querySelector('.alert-close-mark');
 const alertTitle = document.querySelector('.cta-block__title');
 const alertText = document.querySelector('.cta-block__content');
 
+showAlert('info', 'Для сохранения/изменения данных нажмите кнопку сохранить');
+
 alertClose.addEventListener('click', () => {
 	alertBlock.classList.add('hidden');
 	alertTitle.text('');
