@@ -25,9 +25,7 @@
 }
 
 .loader {
-    animation-duration: 0.3s;
-    animation-name: rotate;
-    animation-iteration-count: infinite;
+    animation: 0.3s infinite alternate rotate;
 }
 
 @keyframes slidein {
