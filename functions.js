@@ -236,8 +236,8 @@ showAlert('info', 'Для сохранения/изменения данных �
 
 alertClose.addEventListener('click', () => {
 	alertBlock.classList.add('hidden');
-	alertTitle.text('');
-	alertText.text('');
+	alertTitle.innerHTML('');
+	alertText.innerHTML('');
 });
 
 function showAlert(type, title, text = '') {
@@ -248,8 +248,8 @@ function showAlert(type, title, text = '') {
 		}
 	}
 	alertBlock.classList.remove('hidden');
-	alertTitle.text(title);
-	alertText.text(text);
+	alertTitle.innerHTML(title);
+	alertText.innerHTML(text);
 }
 
 /***
