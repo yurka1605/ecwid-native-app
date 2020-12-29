@@ -2,6 +2,9 @@
     min-height: 100vh;
     height: auto;
 }
+.alert {
+    margin-bottom: 0!important;
+}
 .alert.hidden {
     display: none;
 }
