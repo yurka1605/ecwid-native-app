@@ -172,7 +172,7 @@ saveBtn.addEventListener('click', async function () {
 		} else {
 			await createNewClient(data);
 		}
-		loader.classList.remove('hidden');
+		loader.classList.add('hidden');
 	});
 });
 
