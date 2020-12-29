@@ -190,7 +190,7 @@ async function createNewClient(data) {
 			showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
 		}
 	} catch (error) {
-		showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${error.status}, Описание: ${error.text}`);
+		showAlert('error', 'Ошибка сохранения данных', `Код ошибки: ${error.status}, Описание: ${error.message}`);
 	}
 }
 
@@ -215,7 +215,7 @@ async function updateClient(data) {
 			showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${res.result.errorCode}, Описание: ${res.result.errorDescription}`);
 		}
 	} catch (error) {
-		showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${error.status}, Описание: ${error.text}`);
+		showAlert('error', 'Ошибка изменения данных', `Код ошибки: ${error.status}, Описание: ${error.message}`);
 	}
 }
 
