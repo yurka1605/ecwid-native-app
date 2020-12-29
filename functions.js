@@ -159,6 +159,7 @@ const loader = document.querySelector('.loader');
 
 saveBtn.addEventListener('click', async function () {
 	loader.classList.remove('hidden');
+	saveBtn.disabled = true;
 	EcwidApp.getAppStorage(async function(allValues) {
 		const data = {...JSON.parse(allValues.find(el => el.key === 'public').value)};
 		allValues.forEach(el => {
@@ -173,6 +174,7 @@ saveBtn.addEventListener('click', async function () {
 			await createNewClient(data);
 		}
 		loader.classList.add('hidden');
+		saveBtn.disabled = false;
 	});
 });
 
