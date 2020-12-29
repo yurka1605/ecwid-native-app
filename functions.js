@@ -121,6 +121,7 @@ var initialConfig = {
 };
 
 initialConfig.public = JSON.stringify(initialConfig.public);
+EcwidApp.setAppStorage({token_app: accessToken}, () => console.log(`Токен обновлен`));
 
 function createUserData() {
 	EcwidApp.setAppStorage(initialConfig.private);
