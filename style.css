@@ -5,4 +5,18 @@
 .alert.hidden {
     display: none;
 }
-
+.a-card--success {
+    border-color: #37ba32;
+    background-color: #ebf8eb;
+    box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 1px #37ba32 inset;
+}
+.a-card--info {
+    border-color: #068eef;
+    background-color: #fff;
+    box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 1px #068eef inset;
+}
+.a-card--error {
+    border-color: #fd3826;
+    background-color: #ffebe9;
+    box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 1px #fd3826 inset;
+}
