@@ -2,4 +2,7 @@
     min-height: 100vh;
     height: auto;
 }
+.alert.hidden {
+    display: none;
+}
 
